@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { parse } from 'csv-parse/sync';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
@@ -21,7 +20,17 @@ console.log(`Loaded ${jobs.length} test jobs.`);
 
 // 2. Read Real Repo CSV Data
 const csvData = fs.readFileSync(CSV_PATH, 'utf-8');
-const records = parse(csvData, { columns: true, skip_empty_lines: true });
+function parseCSV(text) {
+    const lines = text.trim().split('\n');
+    const headers = lines[0].split(',');
+    return lines.slice(1).map(line => {
+        const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = values[i] ? values[i].replace(/^"|"$/g, '') : '');
+        return obj;
+    });
+}
+const records = parseCSV(csvData);
 
 // Create a lookup map for faster searching
 const companyMap = new Map();

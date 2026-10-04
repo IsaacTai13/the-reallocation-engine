@@ -27,7 +27,25 @@ During this run, we observed that the `Isaac Super Fake Tech` job achieved an **
 
 However, we also identified a constraint in the default engine configuration: the `role_quality` weight is hardcoded to 0, leaving 35% of the scoring potential unassigned (max possible score is 0.65). For production deployment, this 0.35 weight must be assigned to `role_quality` (to evaluate comprehensive quality, combining objective metrics (like O*NET AI-resilience) with personal lifestyle preferences (Location and Remote models)) to prevent the 0.3 threshold from over-filtering non-sponsoring companies.
 
-## 4. Attestation
-I attest that this run log represents a real execution of the prototype script against the Bayesian scorer. No data values, scores, or output tables were hallucinated, forged, or manually typed into the code to force a desired outcome. The exception handling (Liveness `-1`) and missing data tags (`no-matched`) functioned as intended and accurately reflect their underlying evidence sources.
+## 4. Attestation & Reflection
 
-**Signed:** tisaac
+### Attestation
+- Recipe: SWE STEM-OPT Runway Finder v0.1.0
+- By: tisaac · 2026-10-03
+
+### Tested
+| Ran | Saw | Expected |
+|---|---|---|
+| Run `index.js` with `1LIFE HEALTHCARE INC` | Scored 0.8 on sponsorship `[record]` | High sponsorship bonus as it exists in 80-days CSV |
+| Run `index.js` with fake company | Scored 0 on sponsorship `[no-matched]` | 0 bonus points without hallucinating a record |
+| Run `index.js` with non-ATS URL | Liveness gated to `-1` | Catch error without crashing the script |
+| Scorer evaluation of fake company | Final decision: `Apply` (Score 0.30) | Expected threshold pass due to high Fit offset |
+
+### Did not test
+- Live OpenAI/Claude API calls for `model-judgment` (Mocked to 1.0).
+
+### Broke during testing, fixed
+- The engine scorer initially failed to reflect my persona's lack of care for sponsorship because `role_quality` defaults to 0. Fixed documentation by reallocating the 0.35 weight to `role_quality`.
+
+### Reflection
+The CSV lookup and `-1` error handling worked flawlessly. However, the biggest miss was failing to realize that the Bayesian engine hardcodes `role_quality` to 0, artificially capping scores. The concrete next improvement is modifying the prototype to output `role_quality` values (salary ranges, location strings) and overriding the engine config locally to ensure the 0.35 weight is applied.

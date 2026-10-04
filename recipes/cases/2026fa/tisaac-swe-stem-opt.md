@@ -1,5 +1,5 @@
 ---
-status: DRAFT # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE
+status: RUNNABLE-SAMPLE # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE
 todos_open: 2
 last_gate: null
 attestation: null
