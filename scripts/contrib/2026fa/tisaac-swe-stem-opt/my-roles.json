@@ -1,0 +1,65 @@
+[
+  {
+    "role_id": "job-1-real",
+    "company": "1LIFE HEALTHCARE INC",
+    "title": "Software Engineer",
+    "sponsorship": {
+      "p": 0.8,
+      "source": "record"
+    },
+    "fit": {
+      "p": 1,
+      "source": "model-judgment"
+    },
+    "liveness": {
+      "factor": 1,
+      "source": "record"
+    },
+    "timeline": {
+      "factor": 1,
+      "source": "your-input"
+    }
+  },
+  {
+    "role_id": "job-2-fake",
+    "company": "Isaac Super Fake Tech LLC",
+    "title": "Software Engineer",
+    "sponsorship": {
+      "p": 0,
+      "source": "no-matched"
+    },
+    "fit": {
+      "p": 1,
+      "source": "model-judgment"
+    },
+    "liveness": {
+      "factor": 1,
+      "source": "record"
+    },
+    "timeline": {
+      "factor": 1,
+      "source": "your-input"
+    }
+  },
+  {
+    "role_id": "job-3-bad-url",
+    "company": "Non-ATS Startup",
+    "title": "Software Engineer",
+    "sponsorship": {
+      "p": 0,
+      "source": "no-matched"
+    },
+    "fit": {
+      "p": 1,
+      "source": "model-judgment"
+    },
+    "liveness": {
+      "factor": -1,
+      "source": "record"
+    },
+    "timeline": {
+      "factor": 1,
+      "source": "your-input"
+    }
+  }
+]
